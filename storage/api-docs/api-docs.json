@@ -1,0 +1,110 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TEST API documentation",
+        "description": "Swagger doc for test task",
+        "contact": {
+            "email": "acerkezov97@gmail.com"
+        },
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Test API Server"
+        }
+    ],
+    "paths": {
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "CUSTOMER/AUTH"
+                ],
+                "summary": "Customer Me",
+                "operationId": "7499ec637b08adc4fff4dd0fc8347e93",
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "message": {
+                        "description": "Error message",
+                        "type": "string"
+                    },
+                    "error": {
+                        "description": "ERROR",
+                        "type": "string"
+                    },
+                    "data": {
+                        "description": "error data messages",
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": "true"
+                    },
+                    "data": {
+                        "description": "succes data",
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Authorization token obtained from logging in.",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
