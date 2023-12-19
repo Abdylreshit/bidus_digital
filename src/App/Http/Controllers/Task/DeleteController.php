@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\UpdateRequest;
-use App\Http\Resources\TaskResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Post(
- *     path="/api/task/{id}/update",
+ *     path="/api/task/{id}/delete",
  *     tags={"TASK"},
- *     summary="Task update",
+ *     summary="Task delete",
  *     security={{"bearer": {}}},
  *     @OA\Parameter(
  *        description="task id",
@@ -20,11 +19,8 @@ use Illuminate\Http\JsonResponse;
  *        required=true,
  *        @OA\Schema(type="integer")
  *     ),
- *     @OA\RequestBody(
- *          @OA\JsonContent(ref="#/components/schemas/UpdateRequest")
- *     ),
  *     @OA\Response(
- *          response="200",
+ *          response="202",
  *          description="result",
  *          @OA\JsonContent(ref="#/components/schemas/SuccessResponse"),
  *     ),
@@ -35,26 +31,20 @@ use Illuminate\Http\JsonResponse;
  *     )
  * )
  */
-class UpdateController extends Controller
+class DeleteController extends Controller
 {
     /**
-     * @param UpdateRequest $request
+     * @param Request $request
      * @return JsonResponse
      */
-    public function __invoke(UpdateRequest $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $user = currentUser();
 
-        $task = $user->tasks()
-            ->findOrFail($request->id);
+        $task = $user->tasks()->findOrFail($request->id);
 
-        $task->update([
-            'title'         => $request->title,
-            'description'   => $request->description,
-        ]);
+        $task->delete();
 
-        return $this->successResponse([
-            'task' => new TaskResource($task)
-        ]);
+        return $this->acceptedResponse('ok');
     }
 }

@@ -10,18 +10,451 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://localhost:8000",
             "description": "Test API Server"
         }
     ],
     "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "User login",
+                "operationId": "84399d03ddcce33b7e85f76005c33ee4",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "User logout",
+                "operationId": "4a0a0e70e141fde3bd925dc1cba2aa35",
+                "responses": {
+                    "202": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/auth/me": {
             "get": {
                 "tags": [
-                    "CUSTOMER/AUTH"
+                    "AUTH"
                 ],
-                "summary": "Customer Me",
+                "summary": "User me",
                 "operationId": "7499ec637b08adc4fff4dd0fc8347e93",
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "User register",
+                "operationId": "e49cba58a6405534cdd7218d7499904a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/{id}/complete": {
+            "post": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "Task complete",
+                "operationId": "7545b92f03afb08b43fe8d67334de269",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/task/{id}/delete": {
+            "post": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "Task delete",
+                "operationId": "c21c008bfd6c8fcd4f966b8c06069989",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/task/{id}/find": {
+            "get": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "Task find",
+                "operationId": "766282ba4c053743dac9fa6ab43bc118",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/task/list": {
+            "get": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "User task list",
+                "operationId": "0f4554af9db142ae1a0280d50cdc1897",
+                "parameters": [
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "order by",
+                        "schema": {
+                            "type": "string",
+                            "default": "id",
+                            "enum": [
+                                "id",
+                                "title",
+                                "description",
+                                "completed_at",
+                                "completed_time"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order_by_type",
+                        "in": "query",
+                        "description": "order by type",
+                        "schema": {
+                            "type": "string",
+                            "default": "id",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "search value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/task/store": {
+            "post": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "Task create",
+                "operationId": "12fb99297355adf4f6326981cba7bb15",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/task/{id}/update": {
+            "post": {
+                "tags": [
+                    "TASK"
+                ],
+                "summary": "Task update",
+                "operationId": "50eb00de8b5d62bf0ad6aa64793c4ce5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "result",
@@ -92,6 +525,89 @@
                             "type": "object"
                         },
                         "collectionFormat": "multi"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "user email",
+                        "type": "string",
+                        "example": "any@any.com"
+                    },
+                    "password": {
+                        "description": "user password",
+                        "type": "string",
+                        "example": "123123"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "required": [
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "user email",
+                        "type": "string",
+                        "example": "any@any.com"
+                    },
+                    "password": {
+                        "description": "user password",
+                        "type": "string",
+                        "example": "123123"
+                    },
+                    "password_confirmation": {
+                        "description": "user password confirmation",
+                        "type": "string",
+                        "example": "123123"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "task title",
+                        "type": "string",
+                        "example": "any"
+                    },
+                    "description": {
+                        "description": "task discription",
+                        "type": "string",
+                        "example": "any"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateRequest": {
+                "required": [
+                    "title",
+                    "description",
+                    "completed_at"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "task title",
+                        "type": "string",
+                        "example": "any"
+                    },
+                    "description": {
+                        "description": "task discription",
+                        "type": "string",
+                        "example": "any"
                     }
                 },
                 "type": "object"

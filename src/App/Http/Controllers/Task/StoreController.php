@@ -3,25 +3,18 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\UpdateRequest;
+use App\Http\Requests\Task\StoreRequest;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\JsonResponse;
 
 /**
  * @OA\Post(
- *     path="/api/task/{id}/update",
+ *     path="/api/task/store",
  *     tags={"TASK"},
- *     summary="Task update",
+ *     summary="Task create",
  *     security={{"bearer": {}}},
- *     @OA\Parameter(
- *        description="task id",
- *        in="path",
- *        name="id",
- *        required=true,
- *        @OA\Schema(type="integer")
- *     ),
  *     @OA\RequestBody(
- *          @OA\JsonContent(ref="#/components/schemas/UpdateRequest")
+ *          @OA\JsonContent(ref="#/components/schemas/StoreRequest")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -35,23 +28,22 @@ use Illuminate\Http\JsonResponse;
  *     )
  * )
  */
-class UpdateController extends Controller
+class StoreController extends Controller
 {
     /**
-     * @param UpdateRequest $request
+     * @param StoreRequest $request
      * @return JsonResponse
      */
-    public function __invoke(UpdateRequest $request): JsonResponse
+    public function __invoke(StoreRequest $request): JsonResponse
     {
         $user = currentUser();
 
         $task = $user->tasks()
-            ->findOrFail($request->id);
-
-        $task->update([
-            'title'         => $request->title,
-            'description'   => $request->description,
-        ]);
+            ->create([
+                'title'         => $request->title,
+                'description'   => $request->description,
+                'completed_at'  => false
+            ]);
 
         return $this->successResponse([
             'task' => new TaskResource($task)

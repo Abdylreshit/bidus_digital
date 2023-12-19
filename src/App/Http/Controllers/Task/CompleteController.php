@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\UpdateRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\JsonResponse;
 
 /**
  * @OA\Post(
- *     path="/api/task/{id}/update",
+ *     path="/api/task/{id}/complete",
  *     tags={"TASK"},
- *     summary="Task update",
+ *     summary="Task complete",
  *     security={{"bearer": {}}},
  *     @OA\Parameter(
  *        description="task id",
@@ -19,9 +19,6 @@ use Illuminate\Http\JsonResponse;
  *        name="id",
  *        required=true,
  *        @OA\Schema(type="integer")
- *     ),
- *     @OA\RequestBody(
- *          @OA\JsonContent(ref="#/components/schemas/UpdateRequest")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -35,13 +32,13 @@ use Illuminate\Http\JsonResponse;
  *     )
  * )
  */
-class UpdateController extends Controller
+class CompleteController extends Controller
 {
     /**
-     * @param UpdateRequest $request
+     * @param Request $request
      * @return JsonResponse
      */
-    public function __invoke(UpdateRequest $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $user = currentUser();
 
@@ -49,8 +46,8 @@ class UpdateController extends Controller
             ->findOrFail($request->id);
 
         $task->update([
-            'title'         => $request->title,
-            'description'   => $request->description,
+            'completed_at'  => true,
+            'completed_time' => now()
         ]);
 
         return $this->successResponse([
